@@ -5,9 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Cryptopals4 {
-    String file = "4.txt";
+    public static void main(String[] args) throws IOException {
+        String file = "4.txt";
 
-    public Cryptopals4() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
 
         String line;
@@ -17,7 +17,7 @@ public class Cryptopals4 {
         while ((line = reader.readLine()) != null) {
             count++;
         }
-
+        reader.close();
         System.out.println(count);
     }
 }
