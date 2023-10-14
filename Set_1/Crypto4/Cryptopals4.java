@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Cryptopals4 {
     public static void main(String[] args) throws IOException {
-        String file = "4.txt";
+        String file = "Data/4.txt";
 
         BufferedReader reader = new BufferedReader(new FileReader(file));
 
@@ -15,7 +15,7 @@ public class Cryptopals4 {
         int count = 0;
 
         while ((line = reader.readLine()) != null) {
-            count++;
+            System.out.println(line);
         }
         reader.close();
         System.out.println(count);
