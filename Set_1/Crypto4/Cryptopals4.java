@@ -7,17 +7,15 @@ import java.io.IOException;
 public class Cryptopals4 {
     public static void main(String[] args) throws IOException {
         String file = "Data/4.txt";
-
         BufferedReader reader = new BufferedReader(new FileReader(file));
-
         String line;
 
-        int count = 0;
+        int bestKey = 0;
+        Double bestScore = 0.00;
 
         while ((line = reader.readLine()) != null) {
             System.out.println(line);
         }
         reader.close();
-        System.out.println(count);
     }
 }
