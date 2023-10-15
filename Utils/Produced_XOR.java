@@ -31,10 +31,17 @@ public class Produced_XOR {
                 bestScore = keyValue;
                 bestKey = key;
             }
-
-            System.out.println("Key: " + key + " Result: " + asciiString + " Score: " + keyValue);    
-    }
+        }
     return bestKey;
-}
+    }
+
+    public static byte[] findKeyArray(int key) throws UnsupportedEncodingException {
+        byte[] keyArray = new byte[34];
+        for (int i = 0; i < keyArray.length; i++) {
+            keyArray[i] = (byte) key;
+        }
+
+        return keyArray;
+    }
 
 }
