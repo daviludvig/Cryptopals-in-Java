@@ -13,4 +13,12 @@ public class ByteArray {
         }
         return sb.toString();
     }
-}
+
+    public static byte[] fixLength(byte[] target, int len) {
+        byte[] array = new byte[len];
+        for (int i = 0; i < len; i++) {
+            array[i] = target[i % target.length];
+        }
+        return array;
+    }
+}   
