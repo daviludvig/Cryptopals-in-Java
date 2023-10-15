@@ -21,4 +21,28 @@ public class ByteArray {
         }
         return array;
     }
+
+    public static Double hammingDistance(String target1, String target2) {
+        String bits1 = "";
+        String bits2 = "";
+
+        for (int i = 0; i < target1.length(); i++) {
+            int charValue = (int) target1.charAt(i);
+            String binaryString = Integer.toBinaryString(charValue);
+            bits1 += binaryString;
+
+            charValue = (int) target2.charAt(i);
+            binaryString = Integer.toBinaryString(charValue);
+            bits2 += binaryString;
+        }
+
+        Double distance = 0.00;
+
+        for (int i = 0; i < bits1.length(); i++) {
+            if (bits1.charAt(i) != bits2.charAt(i)) {
+                distance++;
+            }
+        }
+        return distance;
+    }
 }   
