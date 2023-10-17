@@ -29,7 +29,6 @@ public class Cryptopals6 {
 
             if (normalizedDistance < bestDistance) {
                 bestDistance = normalizedDistance;
-                // System.out.println(key);
             }
         }
     }
