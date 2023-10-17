@@ -38,11 +38,18 @@ public class ByteArray {
 
         Double distance = 0.00;
 
+        System.out.println(target1);
+        System.out.println(bits1);
+        System.out.println(target2);
+        System.out.println(bits2);
+        
+
         for (int i = 0; i < bits1.length(); i++) {
             if (bits1.charAt(i) != bits2.charAt(i)) {
                 distance++;
             }
-        }
+        }   
+        System.out.println(distance);
         return distance;
     }
 }   
