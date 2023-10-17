@@ -22,11 +22,33 @@ public class ByteArray {
         return array;
     }
 
-    public static int hammingDistance(String target1, String target2) {
-        byte xor[] = Produced_XOR.xor(target1.getBytes(), target2.getBytes());
-        int distance = 0;
+    // Deprecated method
+
+    // public static int hammingDistance(String target1, String target2) {
+    //     byte xor[] = Produced_XOR.xor(target1.getBytes(), target2.getBytes());
+    //     int distance = 0;
         
-        for (byte b : xor) distance += Integer.bitCount(b);
+    //     for (byte b : xor) distance += Integer.bitCount(b);
+        
+    //     return distance;
+    // }
+
+    public static int hammingDistance(String target1, String target2) {
+        int distance = 0;
+
+        byte[] array1 = target1.getBytes();
+        byte[] array2 = target2.getBytes();
+
+        for (int i = 0; i < array1.length; i++) {
+            byte xor = (byte) (array1[i] ^ array2[i]);
+            distance += Integer.bitCount(xor);
+        }
+
+        // for (int i = 0; i < array1.length; i++) {
+        //     if (array1[i] != array2[i]) {
+        //         distance++;
+        //     }
+        // }
         
         return distance;
     }
