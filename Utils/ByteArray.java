@@ -1,5 +1,12 @@
 package Utils;
 
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+
+
 public class ByteArray {
 
     public static String byteB64String(byte[] array) {
@@ -33,50 +40,86 @@ public class ByteArray {
     //     return distance;
     // }
 
-    public static int hammingDistance(String target1, String target2) {
-        int distance = 0;
+    public static int countBits(byte b) {
+        int i = 0;
+		if ((b & 0x01) != 0)
+			i++;
+		if ((b & 0x02) != 0)
+			i++;
+		if ((b & 0x04) != 0)
+			i++;
+		if ((b & 0x08) != 0)
+			i++;
+		if ((b & 0x10) != 0)
+			i++;
+		if ((b & 0x20) != 0)
+			i++;
+		if ((b & 0x40) != 0)
+			i++;
+		if ((b & 0x80) != 0)
+			i++;
+		return i;
+    }
 
-        byte[] array1 = target1.getBytes();
-        byte[] array2 = target2.getBytes();
+    public static int hammingDistance(byte[] array1, byte[] array2) {
+        int distance = 0;
 
         for (int i = 0; i < array1.length; i++) {
             byte xor = (byte) (array1[i] ^ array2[i]);
-            distance += Integer.bitCount(xor);
+            distance += countBits(xor);
         }
 
-        // for (int i = 0; i < array1.length; i++) {
-        //     if (array1[i] != array2[i]) {
-        //         distance++;
-        //     }
-        // }
-        
         return distance;
     }
 
     public static int findKeyEditDistance(String line) {
         float bestDistance = (float) 100;
         int bestKey =  0;
+
+        ArrayList<KeyValuePair> distances = new ArrayList<KeyValuePair>();
+
         for (int key = 2; key < 41; key++) {
             float sum = 0;
 
-            for (int i = 0; i < 4; i++) {
+            int limit = 4;
+            for (int i = 0; i < limit; i++) {
                 String block = line.substring(i*key, (i+1)*key);
                 String nextblock = line.substring((i+1)*key, (i+2)*key);
 
+                float distance = hammingDistance(nextblock.getBytes(), block.getBytes()) / (float)(key*limit);
 
-                float distance = hammingDistance(block, nextblock) / (float)(key*4);
-                //float distance = (float) 4;
                 sum += distance;
             }
 
             System.out.println("Key: " + key + " Distance: " + sum);
+
+            KeyValuePair tempPair = new KeyValuePair(key, sum);
+
+            distances.add(tempPair);
 
             if (sum < bestDistance) {
                 bestDistance = sum;
                 bestKey = key;
             }
         }
-        System.out.println(bestKey);
+
+        Collections.sort(distances, new Comparator<KeyValuePair>() {
+            @Override
+            public int compare(KeyValuePair pair1, KeyValuePair pair2) {
+                return Float.compare(pair1.getDistance(), pair2.getDistance());
+            }
+        });
+
+        System.out.println(bestKey + " " + distances.size());
+
+        for (KeyValuePair pair : distances) {
+            System.out.println(pair.getKey() + " " + pair.getDistance());
+        }
+
+        for (int i = 0; i < 5; i++) {
+            System.out.println(distances.get(i).getKey() + " " + distances.get(i).getDistance());
+        }
+
         return 0;
     }
 }   
