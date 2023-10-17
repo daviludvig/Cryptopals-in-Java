@@ -22,34 +22,39 @@ public class ByteArray {
         return array;
     }
 
-    public static Double hammingDistance(String target1, String target2) {
-        String bits1 = "";
-        String bits2 = "";
-
-        for (int i = 0; i < target1.length(); i++) {
-            int charValue = (int) target1.charAt(i);
-            String binaryString = Integer.toBinaryString(charValue);
-            bits1 += binaryString;
-
-            charValue = (int) target2.charAt(i);
-            binaryString = Integer.toBinaryString(charValue);
-            bits2 += binaryString;
-        }
-
-        Double distance = 0.00;
-
-        System.out.println(target1);
-        System.out.println(bits1);
-        System.out.println(target2);
-        System.out.println(bits2);
+    public static int hammingDistance(String target1, String target2) {
+        byte xor[] = Produced_XOR.xor(target1.getBytes(), target2.getBytes());
+        int distance = 0;
         
-
-        for (int i = 0; i < bits1.length(); i++) {
-            if (bits1.charAt(i) != bits2.charAt(i)) {
-                distance++;
-            }
-        }   
-        System.out.println(distance);
+        for (byte b : xor) distance += Integer.bitCount(b);
+        
         return distance;
+    }
+
+    public static int findKeyEditDistance(String line) {
+        float bestDistance = (float) 100;
+        int bestKey =  0;
+        for (int key = 2; key < 41; key++) {
+            float sum = 0;
+
+            for (int i = 0; i < 4; i++) {
+                String block = line.substring(i*key, (i+1)*key);
+                String nextblock = line.substring((i+1)*key, (i+2)*key);
+
+
+                float distance = hammingDistance(block, nextblock) / (float)(key*4);
+                //float distance = (float) 4;
+                sum += distance;
+            }
+
+            System.out.println("Key: " + key + " Distance: " + sum);
+
+            if (sum < bestDistance) {
+                bestDistance = sum;
+                bestKey = key;
+            }
+        }
+        System.out.println(bestKey);
+        return 0;
     }
 }   
