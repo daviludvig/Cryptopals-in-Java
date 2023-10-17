@@ -117,7 +117,7 @@ public class ByteArray {
         }
 
         for (int i = 0; i < 5; i++) {
-            System.out.println(distances.get(i).getKey() + " " + distances.get(i).getDistance());
+            ;
         }
 
         return 0;
