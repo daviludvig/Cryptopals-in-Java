@@ -61,65 +61,78 @@ public class ByteArray {
 		return i;
     }
 
-    public static int hammingDistance(byte[] array1, byte[] array2) {
+    public static int hammingDistance(String t1, String t2) {
         int distance = 0;
 
-        for (int i = 0; i < array1.length; i++) {
-            byte xor = (byte) (array1[i] ^ array2[i]);
-            distance += countBits(xor);
+        for (int i = 0; i < t1.length(); i++) {
+            if (t1.charAt(i) != t2.charAt(i)) distance++;
         }
 
         return distance;
     }
 
-    public static int findKeyEditDistance(String line) {
-        float bestDistance = (float) 100;
-        int bestKey =  0;
+    public static String base64ToBinString(String base64) {
 
-        ArrayList<KeyValuePair> distances = new ArrayList<KeyValuePair>();
+        StringBuilder sb = new StringBuilder();
 
-        for (int key = 2; key < 41; key++) {
-            float sum = 0;
+        byte[] bytesCodificados = base64.getBytes();
 
-            int limit = 4;
-            for (int i = 0; i < limit; i++) {
-                String block = line.substring(i*key, (i+1)*key);
-                String nextblock = line.substring((i+1)*key, (i+2)*key);
-
-                float distance = hammingDistance(nextblock.getBytes(), block.getBytes()) / (float)(key*limit);
-
-                sum += distance;
-            }
-
-            System.out.println("Key: " + key + " Distance: " + sum);
-
-            KeyValuePair tempPair = new KeyValuePair(key, sum);
-
-            distances.add(tempPair);
-
-            if (sum < bestDistance) {
-                bestDistance = sum;
-                bestKey = key;
+        for (byte b : bytesCodificados) {
+            for (int i = 7; i >= 0; i--) {
+                sb.append((b >> i) & 1);
             }
         }
 
-        Collections.sort(distances, new Comparator<KeyValuePair>() {
-            @Override
-            public int compare(KeyValuePair pair1, KeyValuePair pair2) {
-                return Float.compare(pair1.getDistance(), pair2.getDistance());
-            }
-        });
-
-        System.out.println(bestKey + " " + distances.size());
-
-        for (KeyValuePair pair : distances) {
-            System.out.println(pair.getKey() + " " + pair.getDistance());
-        }
-
-        for (int i = 0; i < 5; i++) {
-            ;
-        }
-
-        return 0;
+        return sb.toString();
     }
+
+    // Pensar na resolucao deste metodo
+
+    // public static int findKeyEditDistance(String line) {
+    //     float bestDistance = (float) 100;
+    //     int bestKey =  0;
+
+    //     ArrayList<KeyValuePair> distances = new ArrayList<KeyValuePair>();
+
+    //     for (int key = 2; key < 41; key++) {
+    //         for (int i = 0; i < 4; i++) {
+    //             String temp = line.substring(i, i + key);
+    //             String temp2 = line.substring(i + key, i + key + key);
+
+    //             int distance = hammingDistance(temp, temp2);
+
+    //             sum += distance;
+    //         }
+
+    //         System.out.println("Key: " + key + " Distance: " + sum);
+
+    //         KeyValuePair tempPair = new KeyValuePair(key, sum);
+
+    //         distances.add(tempPair);
+
+    //         if (sum < bestDistance) {
+    //             bestDistance = sum;
+    //             bestKey = key;
+    //         }
+    //     }
+
+    //     Collections.sort(distances, new Comparator<KeyValuePair>() {
+    //         @Override
+    //         public int compare(KeyValuePair pair1, KeyValuePair pair2) {
+    //             return Float.compare(pair1.getDistance(), pair2.getDistance());
+    //         }
+    //     });
+
+    //     System.out.println(bestKey + " " + distances.size());
+
+    //     for (KeyValuePair pair : distances) {
+    //         System.out.println(pair.getKey() + " " + pair.getDistance());
+    //     }
+
+    //     for (int i = 0; i < 5; i++) {
+    //         ;
+    //     }
+
+    //     return 0;
+    // }
 }   

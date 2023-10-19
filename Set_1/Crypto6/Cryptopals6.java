@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Base64;
 
-import javax.sound.midi.SysexMessage;
 import javax.swing.text.Utilities;
 
 public class Cryptopals6 {
@@ -21,7 +20,7 @@ public class Cryptopals6 {
 
         byte[] b64bytes = Base64.getDecoder().decode(line);
 
-        Utils.ByteArray.findKeyEditDistance(line);
+        // Utils.ByteArray.findKeyEditDistance(line);
 
 
     }
